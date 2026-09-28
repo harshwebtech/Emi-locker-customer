@@ -4,7 +4,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        // यहाँ हम Android Gradle Plugin का स्टेबल वर्ज़न इस्तेमाल कर रहे हैं
         classpath 'com.android.tools.build:gradle:8.1.0'
         classpath 'com.google.gms:google-services:4.3.15'
     }
