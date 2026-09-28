@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EFEFEF"
+    android:gravity="center_horizontal"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@android:drawable/ic_secure"
+        android:layout_marginTop="30dp"
+        android:tint="#D32F2F"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FCE4E4"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EMI का पेमेंट समय से नहीं हुआ है"
+            android:textColor="#D32F2F"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="अपने mobile को use करने के लिए, अपने मोबाइल डीलर से संपर्क करें"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EMI is not paid on time\nTo use your mobile, please contact your mobile dealer"
+            android:textColor="#D32F2F"
+            android:gravity="center"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/merchantDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading Merchant Details..."
+        android:textColor="#555555"
+        android:gravity="center"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View payment schedule >"
+        android:textColor="#2E7D32"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/imeiNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IMEI No. : Fetching..."
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="वैधानिक चेतावनी: मोबाइल में किसी भी प्रकार की छेड़खानी करने वाले पर या फोन की पूरी पेमेंट के बिना सेकंड हैंड बेचने पर कानून कार्रवाई की जाएगी। 10 में से 9 मोबाइल छेड़खानी के बाद हमेशा के लिए खराब हो जाते हैं|"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Warning: Any tampering with the mobile phone or selling it second-hand without completing the full payment will result in legal action. 9 out of 10 mobile phones become permanently damaged after tampering."
+        android:textColor="#666666"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btnOfflineCode"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Use offline code"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#333333"
+        android:textAlignment="viewStart"
+        android:paddingStart="20dp"
+        style="?android:attr/borderlessButtonStyle" />
+
+</LinearLayout>
