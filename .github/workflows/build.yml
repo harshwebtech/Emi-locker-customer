@@ -21,11 +21,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Grant Execute Permission to Gradle
-      run: chmod +x gradlew
-
+    # यहाँ हमने chmod वाला स्टेप हटा दिया है और सीधा gradle इस्तेमाल कर रहे हैं
     - name: Build Release APK
-      run: ./gradlew assembleRelease
+      run: gradle assembleRelease
 
     - name: Upload APK to Artifacts
       uses: actions/upload-artifact@v4
