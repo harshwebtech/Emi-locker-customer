@@ -4,7 +4,9 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -22,14 +24,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // यह फंक्शन तब ट्रिगर होगा जब डीलर ऐप कोई कमांड भेजेगा
         if (remoteMessage.getData().size() > 0) {
             String command = remoteMessage.getData().get("command");
-            
             if (dpm.isDeviceOwnerApp(getPackageName())) {
                 executeAdminCommand(command);
-            } else {
-                Log.e("MDM", "App is not device owner yet!");
             }
         }
     }
@@ -37,37 +35,37 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void executeAdminCommand(String command) {
         switch (command) {
             case "LOCK_DEVICE":
-                // फोन को लॉक स्क्रीन पर ले जाने का कमांड
                 Intent lockIntent = new Intent(this, LockScreenActivity.class);
                 lockIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(lockIntent);
                 break;
 
             case "UNLOCK_DEVICE":
-                // अगर फोन लॉक है, तो अनलॉक करने के लिए ब्रॉडकास्ट भेजें
-                Intent unlockIntent = new Intent("com.customer.mdm.ACTION_UNLOCK");
-                sendBroadcast(unlockIntent);
+                // भविष्य में अनलॉक लॉजिक के लिए
                 break;
 
             case "DISABLE_CAMERA":
                 dpm.setCameraDisabled(adminComponent, true);
                 break;
 
-            case "ENABLE_CAMERA":
-                dpm.setCameraDisabled(adminComponent, false);
-                break;
-
-            case "WIPE_DATA":
-                // फैक्ट्री रीसेट कमांड
-                dpm.wipeData(0);
+            case "RELEASE_DEVICE":
+                // कस्टमर की EMI पूरी होने पर एडमिन पावर छोड़ना
+                try {
+                    dpm.clearDeviceOwnerApp(getPackageName());
+                    // पावर छोड़ते ही खुद को अनइंस्टॉल करने का प्रॉम्प्ट देना
+                    Intent intent = new Intent(Intent.ACTION_DELETE);
+                    intent.setData(Uri.parse("package:" + getPackageName()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (SecurityException e) {
+                    Log.e("MDM", "Release failed", e);
+                }
                 break;
         }
     }
-
+    
     @Override
     public void onNewToken(String token) {
-        // यह FCM टोकन आपको अपने सर्वर (या एडमिन पैनल) पर भेजना होगा
         Log.d("FCM_TOKEN", "New Token: " + token);
-        // TODO: Send this token to your database
     }
 }
