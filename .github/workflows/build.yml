@@ -2,9 +2,7 @@ name: Build Customer App APK
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout
       uses: actions/checkout@v4
 
     - name: Set up JDK 17
@@ -21,13 +19,25 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # यहाँ हमने chmod वाला स्टेप हटा दिया है और सीधा gradle इस्तेमाल कर रहे हैं
-    - name: Build Release APK
-      run: gradle assembleRelease
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
 
-    - name: Upload APK to Artifacts
+    - name: Install Android packages
+      run: |
+        sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+
+    - name: Create Gradle Wrapper
+      run: |
+        gradle wrapper --gradle-version 8.2
+
+    - name: Build Release APK
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleRelease --stacktrace --no-daemon
+
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: Customer-App-Release-APK
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
-        
+        name: Customer-App-APK
+        path: app/build/outputs/apk/release/*.apk
+        if-no-files-found: error
