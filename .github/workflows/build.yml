@@ -26,13 +26,13 @@ jobs:
         accept-android-sdk-licenses: true
         log-accepted-android-sdk-licenses: false
 
-    - name: Install required SDK packages
+    - name: Install SDK packages
       run: |
         yes | sdkmanager --licenses || true
         sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
-    - name: Create Gradle Wrapper
-      run: gradle wrapper --gradle-version 8.2
+    - name: Create Gradle Wrapper (8.9+)
+      run: gradle wrapper --gradle-version 8.9
 
     - name: Build Release APK
       run: |
